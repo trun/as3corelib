@@ -67,15 +67,6 @@ package com.adobe.serialization.json
 		{
 			this.strict = strict;
 			tokenizer = new JSONTokenizer( s, strict );
-			
-			nextToken();
-			value = parseValue();
-			
-			// Make sure the input stream is empty
-			if ( strict && nextToken() != null )
-			{
-				tokenizer.parseError( "Unexpected characters left in input stream" );
-			}
 		}
 		
 		/**
@@ -91,6 +82,25 @@ package com.adobe.serialization.json
 		public function getValue():*
 		{
 			return value;
+		}
+
+		/**
+		 * Gets the next object that was created by parsing
+		 * the JSON string passed to the constructor.
+		 *
+		 * @return The internal object representation of the JSON
+		 * 		string that was passed to the constructor
+		 * @langversion ActionScript 3.0
+		 * @playerversion Flash 9.0
+		 * @tiptext
+		 */
+		public function nextValue():*
+		{
+			if (nextToken() != null)
+			{
+				return value = parseValue();
+			}
+			return null;
 		}
 		
 		/**
